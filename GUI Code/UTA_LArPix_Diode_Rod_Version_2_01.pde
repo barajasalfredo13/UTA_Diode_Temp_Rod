@@ -1,13 +1,12 @@
 import processing.serial.*;
 Serial port;
 String[] Data;
-float G = 0.0;
-
 
 void setup () {
   size(720, 960);
   port = new Serial(this, "COM3", 9600);
   port.bufferUntil('\n');
+  frameRate(1);
 }
 
 void draw () {
@@ -56,33 +55,29 @@ void draw () {
   X += port.readStringUntil('\n');
   Data = X.split(",");
 
-  for (String a : Data)
-    System.out.println(a);
+  if (Data.length > 8) {
+    for (String a : Data)
+      System.out.println(a);
 
-  System.out.println();
-
-  int size = Data.length;
-  System.out.println(size);
-
-  if (size > 9) ; 
-  {
-
-    text(""+Data[0], 170, 240);
-    text(""+Data[1], 170, 280);
-    text(""+Data[2], 170, 320);
-    text(""+Data[3], 170, 360);
-    text(""+Data[4], 170, 400);
-    text(""+Data[5], 170, 440);
-    text(""+Data[6], 170, 480);
-    text(""+Data[7], 170, 520);
-
-    fill(125, 172, 250);
-
+    System.out.println();
+    
+     text(""+Data[0], 170, 240);
+     text(""+Data[1], 170, 280);
+     text(""+Data[2], 170, 320);
+     text(""+Data[3], 170, 360);
+     text(""+Data[4], 170, 400);
+     text(""+Data[5], 170, 440);
+     text(""+Data[6], 170, 480);
+     text(""+Data[7], 170, 520);
+     
     float n = 0;
     for (int i = 0; i < Data.length-1; i++) {
       if (float(Data[i]) > 0.93)
         n++;
     }
-    rect(320, 550, 160, n*(-20));
+
+    fill(125, 172, 250);
+    rect(320, 550, 160, n * (-20));    
+    
   }
 }
